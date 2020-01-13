@@ -23,6 +23,9 @@ from mapview import MIN_LONGITUDE, MAX_LONGITUDE, MIN_LATITUDE, MAX_LATITUDE, \
 from mapview.source import MapSource
 from mapview.utils import clamp
 from itertools import takewhile
+from kivy.utils import platform
+from os.path import join
+from kivy.app import App
 
 import webbrowser
 
@@ -310,7 +313,6 @@ class MapView(Widget):
     delta_x = NumericProperty(0)
     delta_y = NumericProperty(0)
     background_color = ListProperty([181 / 255., 208 / 255., 208 / 255., 1])
-    cache_dir = StringProperty(CACHE_DIR)
     _zoom = NumericProperty(0)
     _pause = BooleanProperty(False)
     _scale = 1.
@@ -512,6 +514,9 @@ class MapView(Widget):
     def __init__(self, **kwargs):
         from kivy.base import EventLoop
         EventLoop.ensure_window()
+        # CACHE_DIR must be in a place where the user has read/write permissions
+        self.cache_dir = self.cache_dir if platform != 'ios' else join(
+            App.get_running_app().user_data_dir, self.cache_dir)
         self._invalid_scale = True
         self._tiles = []
         self._tiles_bg = []
