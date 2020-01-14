@@ -8,9 +8,6 @@ MapView
 MapView is a Kivy widget that display maps.
 """
 
-from kivy.utils import platform
-from kivy.app import App
-import os.path
 
 __all__ = ["Coordinate", "Bbox", "MapView", "MapSource", "MapMarker",
            "MapLayer", "MarkerMapLayer", "MapMarkerPopup"]
